@@ -108,26 +108,35 @@
             box-shadow: 0px 0px 0px 0px #000;
         }
 
-        /* Custom 'Chomp' Animation Element */
-        .chomp-loader {
-            width: 20px;
-            height: 20px;
-            background: black;
-            border-radius: 50%;
-            position: relative;
-            animation: chomp 0.4s infinite linear alternate;
-            clip-path: polygon(100% 0%, 100% 100%, 50% 50%, 0% 100%, 0% 0%);
-        }
-
-        /* Text Highlights */
-        .highlight-orange {
-            color: var(--pac-orange);
-            text-shadow: 2px 2px 0px #000;
+        /* Payment Modal Styles */
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
         }
         
-        .highlight-yellow {
-            color: var(--pac-yellow);
-            text-shadow: 2px 2px 0px #000;
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-card:hover {
+            border-color: var(--pac-yellow);
+            background: rgba(255, 214, 0, 0.05);
+        }
+
+        .qr-placeholder {
+            background-image: repeating-conic-gradient(#111 0% 25%, #fff 0% 50%);
+            background-size: 20px 20px;
+            image-rendering: pixelated;
         }
 
         /* Scroll Reveal */
@@ -188,13 +197,142 @@
     <div class="arcade-grid"></div>
     <div class="vignette"></div>
 
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
+        <div class="relative w-full max-w-4xl bg-[#111] border-4 border-yellow-400 rounded-2xl shadow-[0_0_60px_rgba(255,214,0,0.15)] overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="bg-black/50 border-b border-white/10 p-6 flex items-center justify-between sticky top-0 z-10">
+                <div class="flex items-center gap-3">
+                    <img src="logo.jpg" alt="Logo" class="h-10 w-auto border border-white/20 rounded bg-black">
+                    <div>
+                        <h3 class="font-display font-bold text-xl text-white">Secure Payment Vault</h3>
+                        <p class="text-xs text-green-400 font-mono flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            ENCRYPTED CONNECTION
+                        </p>
+                    </div>
+                </div>
+                <button onclick="closePayment()" class="text-gray-400 hover:text-white hover:bg-white/10 p-2 rounded-lg transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto custom-scrollbar" id="paymentContent">
+                
+                <!-- Initial Payment State -->
+                <div id="paymentStateDefault">
+                    <div class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl mb-8 flex items-start gap-3">
+                        <i data-lucide="info" class="text-blue-400 w-5 h-5 mt-0.5 shrink-0"></i>
+                        <p class="text-sm text-blue-200">
+                            <strong>Note:</strong> All payments are verified manually. Please send the exact amount for your deal. 
+                            Contact support immediately after transfer.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Bitcoin -->
+                        <div class="payment-card p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl">₿</div>
+                                <h4 class="font-bold text-lg">Bitcoin (BTC)</h4>
+                            </div>
+                            <div class="flex gap-4 mb-4">
+                                <div class="w-24 h-24 bg-white p-1 rounded-lg shrink-0">
+                                    <div class="w-full h-full qr-placeholder opacity-80"></div>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-xs text-gray-400 mb-1 font-mono uppercase">Network: BTC (Native)</p>
+                                    <div class="bg-black border border-gray-800 rounded p-2 text-xs font-mono text-gray-300 break-all mb-2">
+                                        bc1qy55n2r5wp0f9g5fkxfkfma8sq97pgv64qwgsjj
+                                    </div>
+                                    <button onclick="copyToClipboard('bc1qy55n2r5wp0f9g5fkxfkfma8sq97pgv64qwgsjj', this)" class="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded text-xs font-bold transition-colors flex items-center justify-center gap-2">
+                                        <i data-lucide="copy" class="w-3 h-3"></i> <span>Copy Address</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Litecoin -->
+                        <div class="payment-card p-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-xl">Ł</div>
+                                <h4 class="font-bold text-lg">Litecoin (LTC)</h4>
+                            </div>
+                            <div class="flex gap-4 mb-4">
+                                <div class="w-24 h-24 bg-white p-1 rounded-lg shrink-0">
+                                    <div class="w-full h-full qr-placeholder opacity-80" style="background-image: repeating-conic-gradient(#333 0% 25%, #ddd 0% 50%);"></div>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-xs text-gray-400 mb-1 font-mono uppercase">Network: Litecoin</p>
+                                    <div class="bg-black border border-gray-800 rounded p-2 text-xs font-mono text-gray-300 break-all mb-2">
+                                        ltc1q0cj95000xla96xy9u2t4n39tfj93cm7h96my84
+                                    </div>
+                                    <button onclick="copyToClipboard('ltc1q0cj95000xla96xy9u2t4n39tfj93cm7h96my84', this)" class="w-full py-2 bg-white/10 hover:bg-white/20 text-white rounded text-xs font-bold transition-colors flex items-center justify-center gap-2">
+                                        <i data-lucide="copy" class="w-3 h-3"></i> <span>Copy Address</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Zelle -->
+                        <div class="payment-card p-6 md:col-span-2 border-dashed border-2 border-purple-500/30">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">Z</div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Zelle Pay</h4>
+                                        <p class="text-xs text-gray-400">Preferred for US customers</p>
+                                    </div>
+                                </div>
+                                <div class="bg-purple-900/30 text-purple-300 px-3 py-1 rounded text-xs font-bold">
+                                    Protected
+                                </div>
+                            </div>
+                            <div class="mt-4 bg-black/40 p-3 rounded text-sm text-gray-300">
+                                Zelle payment details are generated uniquely for each transaction to ensure security. 
+                                Please contact our support team on Telegram to receive the current Zelle handle.
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-white/10 flex justify-end">
+                        <button onclick="showPaidState()" class="btn-game px-8 py-3 rounded-lg text-sm font-bold flex items-center gap-2">
+                            <span>I Have Made Payment</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirmation State (Hidden by default) -->
+                <div id="paymentStateSuccess" class="hidden text-center py-12">
+                    <div class="w-20 h-20 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+                        <i data-lucide="check" class="w-10 h-10 text-black"></i>
+                    </div>
+                    <h3 class="text-3xl font-display font-bold text-white mb-4">Payment Logged!</h3>
+                    <p class="text-gray-400 max-w-md mx-auto mb-8">
+                        Our team is now verifying your transaction on the blockchain. 
+                        Please send a screenshot of your payment to our Telegram support to expedite your booking.
+                    </p>
+                    <a href="https://t.me/Pacmandeals" target="_blank" class="inline-flex items-center gap-3 bg-[#0088cc] hover:bg-[#0099e6] text-white text-lg font-bold py-4 px-10 rounded-full transition-all shadow-[0_0_20px_rgba(0,136,204,0.4)]">
+                        <i data-lucide="send" class="w-6 h-6"></i>
+                        Send Proof on Telegram
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="fixed w-full z-50 transition-all duration-300 border-b-2 border-transparent bg-[#111]/90 backdrop-blur-md" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <!-- Logo Section -->
                 <a href="#" class="flex items-center gap-3 group">
-                    <!-- Using logo.jpg as requested -->
                     <img src="logo.jpg" alt="Pac-Man Deals Logo" class="h-12 w-auto object-contain border-2 border-black rounded-lg shadow-[2px_2px_0px_#fff] group-hover:shadow-[4px_4px_0px_var(--pac-yellow)] transition-all">
                 </a>
                 
@@ -205,17 +343,17 @@
                 </div>
 
                 <div>
-                    <a href="https://t.me/Pacmandeals" target="_blank" class="btn-game px-6 py-2 rounded-lg text-sm flex items-center gap-2">
-                        <i data-lucide="send" class="w-4 h-4 border-black"></i>
-                        <span>Start Game</span>
-                    </a>
+                    <button onclick="openPayment()" class="btn-game px-6 py-2 rounded-lg text-sm flex items-center gap-2">
+                        <i data-lucide="credit-card" class="w-4 h-4 border-black"></i>
+                        <span>Payment Vault</span>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Floating Quick Access -->
-    <a href="https://t.me/Pacmandeals" target="_blank" class="fixed bottom-6 right-6 z-50 group">
+    <a href="https://t.me/Pacmandeals" target="_blank" class="fixed bottom-6 right-6 z-40 group">
         <div class="w-16 h-16 bg-[#0088cc] rounded-full border-4 border-white shadow-[4px_4px_0px_#000] flex items-center justify-center hover:scale-110 hover:-translate-y-1 transition-all">
             <i data-lucide="send" class="text-white w-8 h-8 ml-0.5"></i>
         </div>
@@ -246,10 +384,10 @@
             </p>
             
             <div class="reveal delay-300 flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="#levels" class="btn-game px-10 py-5 rounded-xl text-lg flex items-center gap-3 w-full sm:w-auto justify-center">
+                <button onclick="openPayment()" class="btn-game px-10 py-5 rounded-xl text-lg flex items-center gap-3 w-full sm:w-auto justify-center">
                     Start Saving Now
                     <i data-lucide="chevron-right" class="w-6 h-6 bg-black text-yellow-400 rounded-full p-0.5"></i>
-                </a>
+                </button>
                 <div class="flex items-center gap-4 text-gray-400 font-mono text-sm uppercase">
                     <div class="dots-container">
                         <div class="dot"></div>
@@ -455,9 +593,14 @@
                     <div class="bg-black w-24 h-24 mx-auto rounded-full border-4 border-green-500 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(74,222,128,0.4)] group-hover:scale-110 transition-transform">
                         <span class="font-display font-bold text-3xl text-green-500">3</span>
                     </div>
-                    <div class="text-center bg-[#1a1a1a] p-6 rounded-xl border-2 border-gray-800">
-                        <h3 class="text-xl font-bold mb-2 text-white">Pay & Win</h3>
-                        <p class="text-gray-400 text-sm">Confirm everything looks good, then make the payment.</p>
+                    <div class="text-center bg-[#1a1a1a] p-6 rounded-xl border-2 border-gray-800 flex flex-col h-full justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-white">Pay & Win</h3>
+                            <p class="text-gray-400 text-sm mb-4">Confirm everything looks good, then make the payment.</p>
+                        </div>
+                        <button onclick="openPayment()" class="w-full py-2 bg-green-500/20 text-green-400 border border-green-500/50 rounded font-bold hover:bg-green-500 hover:text-black transition-all">
+                            Pay Now
+                        </button>
                     </div>
                 </div>
             </div>
@@ -494,9 +637,13 @@
         <div class="absolute inset-0 bg-gradient-to-t from-yellow-900/20 to-transparent pointer-events-none"></div>
         
         <div class="relative z-10 max-w-3xl mx-auto reveal">
-            <div class="inline-block bg-yellow-400 text-black font-black px-4 py-1 rounded mb-6 uppercase tracking-widest border-2 border-black rotate-2">
-                New Game Plus
+            <div class="flex flex-col items-center mb-8">
+                <img src="logo.jpg" alt="Logo" class="h-16 w-auto border-4 border-black rounded-xl mb-6 shadow-[4px_4px_0px_#fff]">
+                <div class="inline-block bg-yellow-400 text-black font-black px-4 py-1 rounded mb-2 uppercase tracking-widest border-2 border-black rotate-2">
+                    New Game Plus
+                </div>
             </div>
+            
             <h2 class="text-5xl md:text-7xl font-black mb-8 text-white uppercase italic">Join the Game.<br><span class="text-stroke-white text-transparent">Save More.</span></h2>
             
             <a href="https://t.me/Pacmandeals" target="_blank" class="inline-flex items-center gap-4 bg-[#0088cc] hover:bg-[#0099e6] text-white text-xl font-bold py-6 px-12 rounded-2xl transition-all shadow-[6px_6px_0px_#000] hover:translate-y-[-4px] hover:shadow-[10px_10px_0px_#000] border-4 border-white">
@@ -546,6 +693,84 @@
 
         document.querySelectorAll('.reveal').forEach(el => {
             observer.observe(el);
+        });
+
+        // Payment Modal Logic
+        const modal = document.getElementById('paymentModal');
+        const defaultState = document.getElementById('paymentStateDefault');
+        const successState = document.getElementById('paymentStateSuccess');
+
+        function openPayment() {
+            modal.classList.remove('hidden');
+            // Small delay to allow display block to apply before opacity transition
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            
+            // Reset to default state
+            defaultState.classList.remove('hidden');
+            successState.classList.add('hidden');
+        }
+
+        function closePayment() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function showPaidState() {
+            defaultState.classList.add('hidden');
+            successState.classList.remove('hidden');
+        }
+
+        function copyToClipboard(text, btnElement) {
+            // Use Clipboard API or fallback
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopiedFeedback(btnElement);
+                });
+            } else {
+                // Fallback for older browsers
+                let textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showCopiedFeedback(btnElement);
+                } catch (err) {
+                    console.error('Unable to copy', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showCopiedFeedback(btn) {
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="check" class="w-3 h-3"></i> <span>Copied!</span>`;
+            btn.classList.add('bg-green-500', 'text-black', 'border-transparent');
+            btn.classList.remove('bg-white/10', 'text-white');
+            
+            // Re-init icon for the checkmark
+            lucide.createIcons();
+
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.classList.remove('bg-green-500', 'text-black', 'border-transparent');
+                btn.classList.add('bg-white/10', 'text-white');
+                lucide.createIcons();
+            }, 2000);
+        }
+
+        // Close modal on click outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closePayment();
+            }
         });
     </script>
 </body>
