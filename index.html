@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacman Deals | Exclusive Discounts</title>
-    <meta name="description" content="Unlock Premium Deals. Pay Less. Travel More. Private access to verified discounts.">
+    <title>Pacman Deals | Unlock Savings</title>
+    <meta name="description" content="Unlock Deals. Eat Savings. Win Big. Exclusive discounts on travel and food.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,327 +20,347 @@
     <!-- Custom Styles -->
     <style>
         :root {
-            --neon-blue: #00f3ff;
-            --neon-purple: #bc13fe;
-            --neon-green: #0aff68;
-            --bg-dark: #050507;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --pac-yellow: #FFD600;
+            --pac-orange: #FF6B00;
+            --arcade-black: #111111;
+            --grid-color: rgba(255, 255, 255, 0.1);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: var(--arcade-black);
             color: #ffffff;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .font-display {
+        h1, h2, h3, h4, .font-display {
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Animated Background Mesh */
-        .bg-mesh {
+        /* Animated Grid Background */
+        .arcade-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.08) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.08) 0%, transparent 25%);
-            filter: blur(60px);
-            animation: pulse-bg 10s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulse-bg {
-            0% { opacity: 0.5; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.1); }
-        }
-
-        /* Glassmorphism Card */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 243, 255, 0.1);
-        }
-
-        /* Neon Text Gradient */
-        .text-gradient {
-            background: linear-gradient(135deg, #fff 0%, #a5a5a5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: scrollGrid 20s linear infinite;
         }
         
-        .text-gradient-accent {
-            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .vignette {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, #000 90%);
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* Custom Button */
-        .btn-neon {
+        @keyframes scrollGrid {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(40px); }
+        }
+
+        /* Neubrutalist / Retro Card Style */
+        .retro-card {
+            background-color: #1a1a1a;
+            border: 3px solid #000;
+            box-shadow: 6px 6px 0px 0px var(--pac-orange);
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .retro-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0px 0px var(--pac-yellow);
+            border-color: #fff;
+        }
+        
+        .retro-card-yellow {
+            background-color: var(--pac-yellow);
+            color: black;
+            border: 3px solid #000;
+            box-shadow: 6px 6px 0px 0px #fff;
+        }
+
+        /* Buttons */
+        .btn-game {
+            background-color: var(--pac-yellow);
+            color: black;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px 0px #000;
+            transition: all 0.1s;
+        }
+
+        .btn-game:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #fff;
+            background-color: #ffe033;
+        }
+
+        .btn-game:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+
+        /* Custom 'Chomp' Animation Element */
+        .chomp-loader {
+            width: 20px;
+            height: 20px;
+            background: black;
+            border-radius: 50%;
             position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            background: linear-gradient(90deg, rgba(0,243,255,0.1), rgba(188,19,254,0.1));
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .btn-neon::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn-neon:hover::before {
-            left: 100%;
+            animation: chomp 0.4s infinite linear alternate;
+            clip-path: polygon(100% 0%, 100% 100%, 50% 50%, 0% 100%, 0% 0%);
         }
 
-        .btn-neon:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
-            text-shadow: 0 0 8px rgba(255,255,255,0.5);
-        }
-
-        /* Floating Animation for Button */
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
+        /* Text Highlights */
+        .highlight-orange {
+            color: var(--pac-orange);
+            text-shadow: 2px 2px 0px #000;
         }
         
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        .highlight-yellow {
+            color: var(--pac-yellow);
+            text-shadow: 2px 2px 0px #000;
         }
 
-        /* Scroll Reveal Animation Classes */
+        /* Scroll Reveal */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
         .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
         .delay-300 { transition-delay: 300ms; }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        /* Floating Dots Animation */
+        .dots-container {
+            display: flex;
+            gap: 12px;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark); 
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            animation: pulse-dot 1s infinite alternate;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #333; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555; 
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes pulse-dot {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 1; background-color: var(--pac-yellow); }
         }
 
-        /* Grid Background Pattern */
-        .grid-bg {
-            background-size: 50px 50px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--pac-yellow); 
+            border: 3px solid #111;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--pac-orange); 
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-yellow-400 selection:text-black">
 
-    <!-- Background Elements -->
-    <div class="bg-mesh"></div>
-    <div class="fixed inset-0 grid-bg z-[-1] pointer-events-none"></div>
+    <!-- Background -->
+    <div class="arcade-grid"></div>
+    <div class="vignette"></div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 transition-all duration-300 border-b border-transparent" id="navbar">
+    <nav class="fixed w-full z-50 transition-all duration-300 border-b-2 border-transparent bg-[#111]/90 backdrop-blur-md" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center">
-                        <i data-lucide="zap" class="text-white w-5 h-5"></i>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-yellow-400 rounded-full border-4 border-black flex items-center justify-center shadow-[2px_2px_0px_#fff]">
+                        <div style="clip-path: polygon(100% 0%, 100% 100%, 50% 50%, 0% 50%, 0% 0%);" class="bg-black w-full h-full rounded-full scale-0"></div>
+                        <!-- Simple CSS Pac-shape -->
+                        <div class="w-0 h-0 border-t-[10px] border-t-transparent border-r-[10px] border-r-black border-b-[10px] border-b-transparent border-l-[10px] border-l-transparent absolute right-0"></div>
                     </div>
-                    <span class="font-display font-bold text-xl tracking-wider text-white">PACMAN<span class="text-cyan-400">DEALS</span></span>
+                    <span class="font-display font-bold text-2xl tracking-tight text-white uppercase drop-shadow-md">PACMAN<span class="text-yellow-400">DEALS</span></span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#deals" class="text-gray-300 hover:text-white transition-colors px-3 py-2 text-sm font-medium">Deals</a>
-                        <a href="#food" class="text-gray-300 hover:text-white transition-colors px-3 py-2 text-sm font-medium">Food</a>
-                        <a href="#trust" class="text-gray-300 hover:text-white transition-colors px-3 py-2 text-sm font-medium">Trust</a>
-                    </div>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#levels" class="font-bold text-sm uppercase tracking-wider hover:text-yellow-400 transition-colors">Levels</a>
+                    <a href="#food" class="font-bold text-sm uppercase tracking-wider hover:text-yellow-400 transition-colors">Food Mode</a>
+                    <a href="#process" class="font-bold text-sm uppercase tracking-wider hover:text-yellow-400 transition-colors">How to Play</a>
                 </div>
+
                 <div>
-                    <a href="https://t.me/Pacmandeals" target="_blank" class="btn-neon px-6 py-2 rounded-full text-sm font-semibold text-white flex items-center gap-2">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                        <span>@Pacmandeals</span>
+                    <a href="https://t.me/Pacmandeals" target="_blank" class="btn-game px-6 py-2 rounded-lg text-sm flex items-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4 border-black"></i>
+                        <span>Start Game</span>
                     </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Floating Telegram Button -->
-    <a href="https://t.me/Pacmandeals" target="_blank" class="fixed bottom-8 right-8 z-50 animate-float group">
-        <div class="relative w-14 h-14 bg-[#0088cc] rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(0,136,204,0.5)] border-2 border-white/20 hover:scale-110 transition-transform">
-            <i data-lucide="send" class="text-white w-7 h-7 ml-0.5"></i>
-            <span class="absolute right-16 px-3 py-1 bg-white text-black text-xs font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                DM Us
-            </span>
+    <!-- Floating Quick Access -->
+    <a href="https://t.me/Pacmandeals" target="_blank" class="fixed bottom-6 right-6 z-50 group">
+        <div class="w-16 h-16 bg-[#0088cc] rounded-full border-4 border-white shadow-[4px_4px_0px_#000] flex items-center justify-center hover:scale-110 hover:-translate-y-1 transition-all">
+            <i data-lucide="send" class="text-white w-8 h-8 ml-0.5"></i>
         </div>
     </a>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 px-4">
-        <div class="max-w-4xl mx-auto text-center z-10">
-            <div class="reveal inline-block mb-4 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(0,243,255,0.2)]">
-                Private Deals Vault
+    <section class="relative min-h-screen flex items-center justify-center pt-20 px-4 overflow-hidden">
+        <!-- Decorative Background Shapes -->
+        <div class="absolute top-1/3 left-10 w-24 h-24 border-4 border-white/10 rounded-full animate-bounce delay-700"></div>
+        <div class="absolute bottom-1/4 right-10 w-16 h-16 bg-orange-600/20 rounded-lg animate-spin" style="animation-duration: 10s;"></div>
+
+        <div class="max-w-5xl mx-auto text-center z-10">
+            <div class="reveal inline-flex items-center gap-3 px-6 py-2 bg-white/10 border-2 border-white/20 rounded-full mb-8">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-green-400 font-bold font-mono uppercase text-sm tracking-wider">System Online: Ready to Save</span>
             </div>
             
-            <h1 class="reveal delay-100 text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Unlock Premium Deals.<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Pay Less. Travel More.</span>
+            <h1 class="reveal delay-100 font-display text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-none tracking-tight">
+                UNLOCK DEALS.<br>
+                <span class="text-yellow-400 drop-shadow-[4px_4px_0px_rgba(0,0,0,1)] text-stroke">EAT SAVINGS.</span><br>
+                WIN BIG.
             </h1>
             
-            <p class="reveal delay-200 text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Private access to verified discounts on travel, bookings, events & food. 
-                <span class="text-white font-semibold">No upfront risk.</span> Verified savings.
+            <p class="reveal delay-200 text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto font-medium">
+                Verified discounts on travel, events & food. 
+                <span class="text-white underline decoration-yellow-400 decoration-4 underline-offset-4">No upfront risk.</span> 
+                Level up your lifestyle today.
             </p>
             
-            <div class="reveal delay-300 flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#deals" class="px-8 py-4 glass-card rounded-full text-white font-medium hover:bg-white/5 transition-colors flex items-center gap-2">
-                    View Available Deals
+            <div class="reveal delay-300 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="#levels" class="btn-game px-10 py-5 rounded-xl text-lg flex items-center gap-3 w-full sm:w-auto justify-center">
+                    Start Saving Now
+                    <i data-lucide="chevron-right" class="w-6 h-6 bg-black text-yellow-400 rounded-full p-0.5"></i>
                 </a>
-                <a href="https://t.me/Pacmandeals" target="_blank" class="group relative px-8 py-4 bg-white text-black font-bold rounded-full transition-transform hover:scale-105 flex items-center gap-3 animate-pulse">
-                    DM on Telegram
-                    <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                    <div class="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-200 z-[-1]"></div>
-                </a>
+                <div class="flex items-center gap-4 text-gray-400 font-mono text-sm uppercase">
+                    <div class="dots-container">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span>Loading Premium Offers</span>
+                </div>
             </div>
 
-            <!-- Trust Indicators -->
-            <div class="reveal delay-300 mt-16 flex justify-center gap-8 text-gray-500 grayscale opacity-70">
-                <div class="flex flex-col items-center gap-2">
-                    <i data-lucide="shield-check" class="w-6 h-6"></i>
-                    <span class="text-xs tracking-widest">VERIFIED</span>
+            <!-- Stats Bar -->
+            <div class="reveal delay-300 mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t-2 border-white/10 pt-8">
+                <div class="text-center">
+                    <div class="text-3xl font-display font-bold text-white">100%</div>
+                    <div class="text-xs text-gray-500 font-mono uppercase">Verified Deals</div>
                 </div>
-                <div class="flex flex-col items-center gap-2">
-                    <i data-lucide="clock" class="w-6 h-6"></i>
-                    <span class="text-xs tracking-widest">FAST REPLIES</span>
+                <div class="text-center">
+                    <div class="text-3xl font-display font-bold text-orange-500">24/7</div>
+                    <div class="text-xs text-gray-500 font-mono uppercase">Human Support</div>
                 </div>
-                <div class="flex flex-col items-center gap-2">
-                    <i data-lucide="lock" class="w-6 h-6"></i>
-                    <span class="text-xs tracking-widest">PRIVATE</span>
+                <div class="text-center">
+                    <div class="text-3xl font-display font-bold text-yellow-400">0%</div>
+                    <div class="text-xs text-gray-500 font-mono uppercase">Upfront Fees</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-display font-bold text-blue-400">4.9</div>
+                    <div class="text-xs text-gray-500 font-mono uppercase">User Rating</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Discount Categories -->
-    <section id="deals" class="py-24 px-4 relative">
+    <!-- Levels Section (Deals) -->
+    <section id="levels" class="py-24 px-4 relative bg-[#161616]">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4">Curated <span class="text-gradient-accent">Discounts</span></h2>
-                <p class="text-gray-400">Select your category. Direct provider bookings.</p>
+                <h2 class="text-4xl md:text-6xl font-black mb-4 uppercase italic transform -skew-x-6">Select <span class="text-yellow-400">Level</span></h2>
+                <p class="text-gray-400 font-mono text-lg">Choose your power-up category below.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 
-                <!-- 40% OFF Column -->
-                <div class="glass-card rounded-3xl p-8 reveal delay-100 border-t-4 border-t-cyan-500">
-                    <div class="flex items-center justify-between mb-8">
-                        <h3 class="text-2xl font-bold text-white">40% OFF DEALS</h3>
-                        <span class="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-lg text-sm font-bold">HOT</span>
+                <!-- Level 1 -->
+                <div class="retro-card rounded-2xl p-0 overflow-hidden reveal delay-100">
+                    <div class="bg-blue-600 p-4 border-b-4 border-black flex justify-between items-center">
+                        <h3 class="text-2xl font-black text-white italic uppercase">Level 1</h3>
+                        <div class="px-3 py-1 bg-black text-white font-mono text-xs font-bold rounded">40% OFF</div>
                     </div>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-4 p-3 hover:bg-white/5 rounded-xl transition-colors">
-                            <div class="p-2 bg-gray-800 rounded-lg text-cyan-400"><i data-lucide="heart"></i></div>
-                            <div>
-                                <h4 class="font-bold">Best Buy</h4>
-                                <p class="text-sm text-gray-500">Requires account with history</p>
+                    <div class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gray-800 rounded-xl border-2 border-gray-600 flex items-center justify-center mr-6">
+                                <i data-lucide="gamepad-2" class="w-8 h-8 text-blue-400"></i>
                             </div>
-                        </li>
-                        <li class="flex items-start gap-4 p-3 hover:bg-white/5 rounded-xl transition-colors">
-                            <div class="p-2 bg-gray-800 rounded-lg text-cyan-400"><i data-lucide="smartphone"></i></div>
                             <div>
-                                <h4 class="font-bold">Prepaid Gift Cards</h4>
-                                <p class="text-sm text-gray-500">Instant delivery options</p>
+                                <h4 class="text-xl font-bold text-white">Essentials Pack</h4>
+                                <p class="text-gray-400 text-sm">Everyday savings for everyone.</p>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                        <ul class="space-y-4 font-mono text-sm">
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i data-lucide="check-square" class="text-blue-500"></i>
+                                <span class="text-white font-bold">Best Buy</span> (Account History Req.)
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i data-lucide="check-square" class="text-blue-500"></i>
+                                Prepaid Gift Cards
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- 50% OFF Column -->
-                <div class="glass-card rounded-3xl p-8 reveal delay-200 border-t-4 border-t-purple-500 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-3">
-                        <div class="animate-pulse w-2 h-2 bg-purple-500 rounded-full"></div>
+                <!-- Level 2 -->
+                <div class="retro-card-yellow rounded-2xl p-0 overflow-hidden reveal delay-200 transform lg:translate-y-8">
+                    <div class="bg-orange-600 p-4 border-b-4 border-black flex justify-between items-center">
+                        <h3 class="text-2xl font-black text-white italic uppercase">Level 2</h3>
+                        <div class="px-3 py-1 bg-black text-white font-mono text-xs font-bold rounded animate-pulse">50% OFF</div>
                     </div>
-                    <div class="flex items-center justify-between mb-8">
-                        <h3 class="text-2xl font-bold text-white">50% OFF DEALS</h3>
-                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-lg text-sm font-bold">PREMIUM</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="plane" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Flights</h4>
+                    <div class="p-8 relative">
+                        <!-- Decorative Ribbon -->
+                        <div class="absolute -right-12 top-8 bg-black text-white text-xs font-bold px-12 py-1 rotate-45 border-y-2 border-white">POPULAR</div>
+
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-white rounded-xl border-4 border-black flex items-center justify-center mr-6 shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
+                                <i data-lucide="trophy" class="w-8 h-8 text-orange-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black text-black">High Roller Pack</h4>
+                                <p class="text-gray-800 font-bold text-sm">Travel & experiences.</p>
+                            </div>
                         </div>
-                        <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="car" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Rental Cars</h4>
-                            <p class="text-xs text-gray-500">Avis & Budget</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white border-2 border-black p-3 rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,0.1)] hover:bg-orange-100 transition-colors">
+                                <i data-lucide="plane" class="text-black mb-1 w-5 h-5"></i>
+                                <span class="font-bold text-black block">Flights</span>
+                            </div>
+                            <div class="bg-white border-2 border-black p-3 rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,0.1)] hover:bg-orange-100 transition-colors">
+                                <i data-lucide="building" class="text-black mb-1 w-5 h-5"></i>
+                                <span class="font-bold text-black block">Hotels</span>
+                            </div>
+                            <div class="bg-white border-2 border-black p-3 rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,0.1)] hover:bg-orange-100 transition-colors">
+                                <i data-lucide="car" class="text-black mb-1 w-5 h-5"></i>
+                                <span class="font-bold text-black block">Rentals</span>
+                            </div>
+                            <div class="bg-white border-2 border-black p-3 rounded-lg shadow-[2px_2px_0px_rgba(0,0,0,0.1)] hover:bg-orange-100 transition-colors">
+                                <i data-lucide="ticket" class="text-black mb-1 w-5 h-5"></i>
+                                <span class="font-bold text-black block">Events</span>
+                            </div>
                         </div>
-                        <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="building" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Hotels</h4>
-                            <p class="text-xs text-gray-500">Booking Platforms</p>
-                        </div>
-                        <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="home" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Airbnb</h4>
-                        </div>
-                        <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="bus" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Bus & Train</h4>
-                        </div>
-                         <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="anchor" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Cruises</h4>
-                        </div>
-                         <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="ticket" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Events & Concerts</h4>
-                        </div>
-                         <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-purple-500/50 transition-colors">
-                            <i data-lucide="film" class="text-purple-400 mb-3"></i>
-                            <h4 class="font-bold">Movie Tickets</h4>
-                        </div>
-                    </div>
-                    <div class="mt-6 pt-6 border-t border-white/10">
-                        <p class="text-sm text-gray-400 flex items-center gap-2">
-                            <i data-lucide="plus-circle" class="w-4 h-4"></i> Also including: Amusement Parks & Activities
-                        </p>
                     </div>
                 </div>
 
@@ -349,126 +369,149 @@
     </section>
 
     <!-- Food Section -->
-    <section id="food" class="py-24 px-4 bg-black/40 border-y border-white/5">
-        <div class="max-w-6xl mx-auto">
+    <section id="food" class="py-24 px-4 bg-orange-600 border-y-8 border-black relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#000 2px, transparent 2px); background-size: 20px 20px;"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between mb-12 gap-6 reveal">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-2">Food Orders</h2>
-                    <p class="text-gray-400">Premium restaurant grid. We handle the checkout.</p>
+                <div class="bg-black p-6 rounded-xl border-4 border-white shadow-[8px_8px_0px_rgba(0,0,0,0.3)] transform -rotate-1">
+                    <h2 class="text-3xl md:text-5xl font-black text-yellow-400 uppercase italic">Food Mode <span class="text-white">Activated</span> 🍔</h2>
                 </div>
-                <div class="flex flex-col items-end">
-                    <div class="px-4 py-2 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg text-sm font-medium flex items-center gap-2 mb-2">
-                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-                        No Uber Eats / DoorDash
+                
+                <div class="flex flex-col items-end text-right">
+                    <div class="bg-white px-4 py-2 border-2 border-black rounded-lg text-black font-bold text-sm mb-2 shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
+                        ⚠️ Direct Websites Only
                     </div>
-                    <div class="text-sm text-gray-500">Minimum Order: <span class="text-white font-bold">$100</span></div>
+                    <div class="bg-black text-white px-4 py-1 rounded font-mono text-sm">
+                        Min. Order: <span class="text-yellow-400">$100</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Brand Grid -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 reveal delay-100">
-                <!-- Brand Items -->
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5">
-                    <span class="font-bold tracking-tight text-orange-500">POPEYES</span>
+                <!-- Brand Cards -->
+                <div class="bg-white p-4 rounded-xl border-4 border-black shadow-[4px_4px_0px_#000] hover:scale-105 transition-transform flex items-center justify-center">
+                    <span class="font-black text-orange-600 text-lg">POPEYES</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5">
-                    <span class="font-bold tracking-tight text-red-500">FIVE GUYS</span>
+                <div class="bg-white p-4 rounded-xl border-4 border-black shadow-[4px_4px_0px_#000] hover:scale-105 transition-transform flex items-center justify-center">
+                    <span class="font-black text-red-600 text-lg">FIVE GUYS</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5">
-                    <span class="font-bold tracking-tight text-amber-700">CHIPOTLE</span>
+                <div class="bg-white p-4 rounded-xl border-4 border-black shadow-[4px_4px_0px_#000] hover:scale-105 transition-transform flex items-center justify-center">
+                    <span class="font-black text-amber-800 text-lg">CHIPOTLE</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5">
-                    <span class="font-bold tracking-tight text-blue-500">DOMINO'S</span>
+                <div class="bg-white p-4 rounded-xl border-4 border-black shadow-[4px_4px_0px_#000] hover:scale-105 transition-transform flex items-center justify-center">
+                    <span class="font-black text-blue-600 text-lg">DOMINO'S</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5">
-                    <span class="font-bold tracking-tight text-green-500">PAPA JOHN'S</span>
+                <div class="bg-white p-4 rounded-xl border-4 border-black shadow-[4px_4px_0px_#000] hover:scale-105 transition-transform flex items-center justify-center">
+                    <span class="font-black text-green-600 text-lg">PAPA JOHN'S</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5">
-                    <span class="font-bold tracking-tight text-yellow-400">SUBWAY</span>
+                <div class="bg-white p-4 rounded-xl border-4 border-black shadow-[4px_4px_0px_#000] hover:scale-105 transition-transform flex items-center justify-center">
+                    <span class="font-black text-yellow-500 text-lg drop-shadow-sm">SUBWAY</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5">
-                    <span class="font-bold tracking-tight text-black bg-white px-2 rounded">JIMMY JOHN'S</span>
+                <div class="bg-white p-4 rounded-xl border-4 border-black shadow-[4px_4px_0px_#000] hover:scale-105 transition-transform flex items-center justify-center">
+                    <span class="font-black text-black text-lg">JIMMY JOHN'S</span>
                 </div>
-                <div class="glass-card p-4 rounded-xl flex items-center justify-center gap-3 hover:bg-white/5 opacity-50 border-dashed">
-                    <span class="text-xs font-mono">MORE COMING SOON</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Trust Us -->
-    <section id="trust" class="py-24 px-4 relative overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] z-[-1]"></div>
-        
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-center text-3xl md:text-5xl font-bold mb-16 reveal">Why Trust <span class="text-gradient-accent">Pacman Deals?</span></h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-6 rounded-2xl reveal delay-100">
-                    <div class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-4 text-cyan-400">
-                        <i data-lucide="lock" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Private & Secure</h3>
-                    <p class="text-sm text-gray-400">Your information is handled with the utmost discretion. Encrypted and safe.</p>
-                </div>
-                
-                <div class="glass-card p-6 rounded-2xl reveal delay-200">
-                    <div class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-4 text-purple-400">
-                        <i data-lucide="zap" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Fast Processing</h3>
-                    <p class="text-sm text-gray-400">We verify and process orders rapidly so you aren't left waiting.</p>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl reveal delay-300">
-                    <div class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-4 text-green-400">
-                        <i data-lucide="check-circle-2" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">Verified Sources</h3>
-                    <p class="text-sm text-gray-400">Our discount methods are tested and proven. 100% success rate.</p>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl reveal delay-300">
-                    <div class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-4 text-blue-400">
-                        <i data-lucide="message-square" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-lg font-bold mb-2">1:1 Support</h3>
-                    <p class="text-sm text-gray-400">Direct access to support via Telegram. No bots, real humans.</p>
+                <div class="bg-black p-4 rounded-xl border-4 border-dashed border-white/50 flex items-center justify-center">
+                    <span class="font-mono text-white text-xs text-center">MORE BRANDS<br>UNLOCKING...</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer / Contact Card -->
-    <footer class="relative py-24 px-4 text-center overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent pointer-events-none"></div>
-        
-        <div class="relative z-10 max-w-2xl mx-auto reveal">
-            <!-- Contact Card -->
-            <div class="glass-card p-8 rounded-3xl border border-cyan-500/30 bg-black/60 shadow-[0_0_50px_rgba(0,243,255,0.1)]">
-                <div class="w-16 h-16 mx-auto bg-[#0088cc] rounded-full flex items-center justify-center mb-6 shadow-lg shadow-cyan-500/20">
-                    <i data-lucide="send" class="w-8 h-8 text-white ml-1"></i>
-                </div>
-                
-                <h2 class="text-2xl font-bold mb-2">Direct Contact on Telegram</h2>
-                <div class="text-cyan-400 font-mono text-lg mb-6 tracking-wide">@Pacmandeals</div>
-                
-                <div class="flex justify-center gap-4 text-sm text-gray-400 mb-8">
-                    <span class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-green-500"></i> Fast replies</span>
-                    <span class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-green-500"></i> Verified deals</span>
-                    <span class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-green-500"></i> No bots</span>
+    <!-- How It Works (Game Flow) -->
+    <section id="process" class="py-24 px-4">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-center text-4xl md:text-5xl font-black mb-16 uppercase text-white reveal">How to <span class="text-orange-500">Play</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <!-- Connector Line (Desktop) -->
+                <div class="hidden md:block absolute top-12 left-0 w-full h-2 bg-gray-800 z-0 rounded-full">
+                    <div class="h-full w-2/3 bg-yellow-400 rounded-full animate-pulse"></div>
                 </div>
 
-                <a href="https://t.me/Pacmandeals" target="_blank" class="w-full block bg-white text-black text-lg font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-lg">
-                    DM @Pacmandeals to Get Started
-                </a>
+                <!-- Step 1 -->
+                <div class="relative z-10 reveal delay-100 group">
+                    <div class="bg-black w-24 h-24 mx-auto rounded-full border-4 border-yellow-400 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(255,214,0,0.4)] group-hover:scale-110 transition-transform">
+                        <span class="font-display font-bold text-3xl text-yellow-400">1</span>
+                    </div>
+                    <div class="text-center bg-[#1a1a1a] p-6 rounded-xl border-2 border-gray-800">
+                        <h3 class="text-xl font-bold mb-2 text-white">Choose Deal</h3>
+                        <p class="text-gray-400 text-sm">Select your level or food order. Send us the details.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 reveal delay-200 group">
+                    <div class="bg-black w-24 h-24 mx-auto rounded-full border-4 border-orange-500 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(255,107,0,0.4)] group-hover:scale-110 transition-transform">
+                        <span class="font-display font-bold text-3xl text-orange-500">2</span>
+                    </div>
+                    <div class="text-center bg-[#1a1a1a] p-6 rounded-xl border-2 border-gray-800">
+                        <h3 class="text-xl font-bold mb-2 text-white">Verification</h3>
+                        <p class="text-gray-400 text-sm">We process it and send you the official confirmation.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 reveal delay-300 group">
+                    <div class="bg-black w-24 h-24 mx-auto rounded-full border-4 border-green-500 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(74,222,128,0.4)] group-hover:scale-110 transition-transform">
+                        <span class="font-display font-bold text-3xl text-green-500">3</span>
+                    </div>
+                    <div class="text-center bg-[#1a1a1a] p-6 rounded-xl border-2 border-gray-800">
+                        <h3 class="text-xl font-bold mb-2 text-white">Pay & Win</h3>
+                        <p class="text-gray-400 text-sm">Confirm everything looks good, then make the payment.</p>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="py-16 px-4 bg-[#0a0a0a] border-t border-gray-800">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+            <div class="bg-black border-2 border-gray-800 p-6 rounded-xl flex items-start gap-4 hover:border-green-500 transition-colors">
+                <div class="bg-green-500/10 p-2 rounded-lg">
+                    <i data-lucide="shield-check" class="text-green-500 w-8 h-8"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white text-lg">Verified Safety</h4>
+                    <p class="text-sm text-gray-400">Our deals are 100% legitimate. You see the proof before you pay.</p>
+                </div>
+            </div>
+            <div class="bg-black border-2 border-gray-800 p-6 rounded-xl flex items-start gap-4 hover:border-blue-500 transition-colors">
+                <div class="bg-blue-500/10 p-2 rounded-lg">
+                    <i data-lucide="users" class="text-blue-500 w-8 h-8"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white text-lg">Human Support</h4>
+                    <p class="text-sm text-gray-400">No bots. Real agents helping you through Telegram every step.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <footer class="relative py-20 px-4 text-center overflow-hidden">
+        <!-- Footer bg gradient -->
+        <div class="absolute inset-0 bg-gradient-to-t from-yellow-900/20 to-transparent pointer-events-none"></div>
+        
+        <div class="relative z-10 max-w-3xl mx-auto reveal">
+            <div class="inline-block bg-yellow-400 text-black font-black px-4 py-1 rounded mb-6 uppercase tracking-widest border-2 border-black rotate-2">
+                New Game Plus
+            </div>
+            <h2 class="text-5xl md:text-7xl font-black mb-8 text-white uppercase italic">Join the Game.<br><span class="text-stroke-white text-transparent">Save More.</span></h2>
             
-            <div class="mt-12 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
-                <p>&copy; 2025 Pacman Deals. All rights reserved.</p>
+            <a href="https://t.me/Pacmandeals" target="_blank" class="inline-flex items-center gap-4 bg-[#0088cc] hover:bg-[#0099e6] text-white text-xl font-bold py-6 px-12 rounded-2xl transition-all shadow-[6px_6px_0px_#000] hover:translate-y-[-4px] hover:shadow-[10px_10px_0px_#000] border-4 border-white">
+                <i data-lucide="send" class="w-8 h-8"></i>
+                Start Chatting on Telegram
+            </a>
+            
+            <div class="mt-16 flex flex-col md:flex-row justify-between items-center text-sm font-mono text-gray-600 border-t border-gray-800 pt-8">
+                <p>&copy; 2024 Pacman Deals. Game Over.</p>
                 <div class="flex gap-4 mt-4 md:mt-0">
-                    <span>Privacy</span>
-                    <span>Terms</span>
+                    <a href="#" class="hover:text-yellow-400">Privacy</a>
+                    <a href="#" class="hover:text-yellow-400">Terms</a>
                 </div>
             </div>
         </div>
@@ -483,11 +526,9 @@
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.classList.add('bg-black/80', 'backdrop-blur-md', 'border-white/10');
-                navbar.classList.remove('border-transparent');
+                navbar.classList.add('py-2');
             } else {
-                navbar.classList.remove('bg-black/80', 'backdrop-blur-md', 'border-white/10');
-                navbar.classList.add('border-transparent');
+                navbar.classList.remove('py-2');
             }
         });
 
