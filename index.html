@@ -192,14 +192,11 @@
     <nav class="fixed w-full z-50 transition-all duration-300 border-b-2 border-transparent bg-[#111]/90 backdrop-blur-md" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-yellow-400 rounded-full border-4 border-black flex items-center justify-center shadow-[2px_2px_0px_#fff]">
-                        <div style="clip-path: polygon(100% 0%, 100% 100%, 50% 50%, 0% 50%, 0% 0%);" class="bg-black w-full h-full rounded-full scale-0"></div>
-                        <!-- Simple CSS Pac-shape -->
-                        <div class="w-0 h-0 border-t-[10px] border-t-transparent border-r-[10px] border-r-black border-b-[10px] border-b-transparent border-l-[10px] border-l-transparent absolute right-0"></div>
-                    </div>
-                    <span class="font-display font-bold text-2xl tracking-tight text-white uppercase drop-shadow-md">PACMAN<span class="text-yellow-400">DEALS</span></span>
-                </div>
+                <!-- Logo Section -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <!-- Using logo.jpg as requested -->
+                    <img src="logo.jpg" alt="Pac-Man Deals Logo" class="h-12 w-auto object-contain border-2 border-black rounded-lg shadow-[2px_2px_0px_#fff] group-hover:shadow-[4px_4px_0px_var(--pac-yellow)] transition-all">
+                </a>
                 
                 <div class="hidden md:flex items-center gap-8">
                     <a href="#levels" class="font-bold text-sm uppercase tracking-wider hover:text-yellow-400 transition-colors">Levels</a>
